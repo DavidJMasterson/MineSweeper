@@ -81,8 +81,11 @@ public class MineSweeperPanel extends JPanel {
 				if (iCell.isMine())
 					board[r][c].setText("!");
 
-				if (iCell.isExposed())
+				else if (iCell.isExposed()) {
+
 					board[r][c].setEnabled(false);
+					board[r][c].setText(Integer.toString(game.getAdjMines(r, c)));
+				}
 				else
 					board[r][c].setEnabled(true);
 			}
@@ -94,8 +97,9 @@ public class MineSweeperPanel extends JPanel {
 
 			for (int r = 0; r < 5; r++)
 				for (int c = 0; c < 5; c++)
-					if (board[r][c] == e.getSource())
+					if (board[r][c] == e.getSource()){
 						game.select(r, c);
+					}
 			
 			if(butQuit == e.getSource())
 				System.exit(0);
