@@ -9,7 +9,7 @@ public class Cell {
         isExposed = exposed;
         isMine = mine;
     }
-
+    
     public boolean isExposed() {
         return isExposed;
     }
