@@ -14,10 +14,12 @@ public class MineSweeperGame {
 	private Cell[][] board;
 	private GameStatus status;
 	private int adjMines;
+	private int size;
 
-	public MineSweeperGame() {
+	public MineSweeperGame(int size) {
+		this.size = size;
 		status = GameStatus.NotOverYet;
-		board = new Cell[5][5];
+		board = new Cell[size][size];
 		adjMines = 0;
 		setEmpty();
 		layMines (24);
@@ -31,13 +33,13 @@ public class MineSweeperGame {
 				//FIX: negative array indices/does not always work
 				if(row < 0) 
 					row = 0;
-				else if(row > 4)
-					row = 4;
+				else if(row > size - 1)
+					row = size - 1;
 				
 				if(col < 0)
 					col = 0;
-				else if(col > 4)
-					col = 4;
+				else if(col > size - 1)
+					col = size - 1;
 				if(board[row][col].isMine()) 
 					count++;
 			}
@@ -46,8 +48,8 @@ public class MineSweeperGame {
 	}
 	
 	private void setEmpty() {
-		for (int r = 0; r < 5; r++)
-			for (int c = 0; c < 5; c++)
+		for (int r = 0; r < size; r++)
+			for (int c = 0; c < size; c++)
 				board[r][c] = new Cell(false, false);  // totally clear.
 	}
 
@@ -62,8 +64,8 @@ public class MineSweeperGame {
 			status = GameStatus.Lost;
 		else {
 			status = GameStatus.Won;    // did I win
-			for (int r = 0; r < 5; r++)     // are only mines left
-				for (int c = 0; c < 5; c++)
+			for (int r = 0; r < size; r++)     // are only mines left
+				for (int c = 0; c < size; c++)
 					if (!board[r][c].isExposed() && !board[r][c].isMine())
 						status = GameStatus.NotOverYet;
 		}
@@ -84,8 +86,8 @@ public class MineSweeperGame {
 
 		Random random = new Random();
 		while (i < mineCount) {			// perhaps the loop will never end :)
-			int c = random.nextInt(5);
-			int r = random.nextInt(5);
+			int c = random.nextInt(size);
+			int r = random.nextInt(size);
 
 			if (!board[r][c].isMine()) {
 				board[r][c].setMine(true);

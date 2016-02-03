@@ -14,6 +14,7 @@ public class MineSweeperPanel extends JPanel {
 	private JButton butQuit;
 	private Cell iCell;
 	private JSlider boardSize;
+	private int size;
 
 	private MineSweeperGame game;  // model
 
@@ -24,16 +25,16 @@ public class MineSweeperPanel extends JPanel {
 		
 		// create buttons/sliders/panes
 		butQuit = new JButton("Quit");
-		boardSize = new JSlider(JSlider.HORIZONTAL);
+	/*	boardSize = new JSlider(JSlider.HORIZONTAL);
 		boardSize.setMinimum(3);
 		boardSize.setMaximum(30);
 		boardSize.setMajorTickSpacing(3);
 		boardSize.setMinorTickSpacing(1);
 		boardSize.setPaintTicks(true);
-		boardSize.setPaintLabels(true);
+		boardSize.setPaintLabels(true);*/
 		
 		// prompt user for board size using JOptionPane and slider
-		JOptionPane.showInputDialog(null, new Object[] { "Select a value: ", boardSize});
+		//JOptionPane.showInputDialog(null, new Object[] { "Select a value: ", boardSize});
 		
 		// create button listener
 		ButtonListener listener = new ButtonListener();
@@ -41,15 +42,25 @@ public class MineSweeperPanel extends JPanel {
 		// add listener for quit button
 		butQuit.addActionListener(listener);
 		
+/*		// add listener for slider
+		boardSize.addChangeListener(new ChangeListener() {
+			@Override 
+			public void stateChanged(ChangeEvent e) {
+				size = boardSize.getValue();
+			}
+		});*/
+		
+		size = Integer.parseInt(JOptionPane.showInputDialog("Please input a value"));
+		
 		// instantiate new MineSweeperGame
-		game = new MineSweeperGame();
+		game = new MineSweeperGame((size));
 
 		// create the board
-		center.setLayout(new GridLayout(5, 5));
-		board = new JButton[5][5];
+		center.setLayout(new GridLayout(size, size));
+		board = new JButton[size][size];
 
-		for (int row = 0; row < 5; row++)
-			for (int col = 0; col < 5; col++) {
+		for (int row = 0; row < size; row++)
+			for (int col = 0; col < size; col++) {
 				board[row][col] = new JButton("");
 				board[row][col].addActionListener(listener);
 				center.add(board[row][col]);
@@ -70,8 +81,8 @@ public class MineSweeperPanel extends JPanel {
 
 	private void displayBoard() {
 
-		for (int r = 0; r < 5; r++)
-			for (int c = 0; c < 5; c++) {
+		for (int r = 0; r < size; r++)
+			for (int c = 0; c < size; c++) {
 				iCell = game.getCell(r, c);
 
 				board[r][c].setText("");
@@ -95,8 +106,8 @@ public class MineSweeperPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 
-			for (int r = 0; r < 5; r++)
-				for (int c = 0; c < 5; c++)
+			for (int r = 0; r < size; r++)
+				for (int c = 0; c < size; c++)
 					if (board[r][c] == e.getSource()){
 						game.select(r, c);
 					}
@@ -123,5 +134,4 @@ public class MineSweeperPanel extends JPanel {
 			}
 		}
 	}
-	
 }
