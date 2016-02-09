@@ -14,15 +14,16 @@ public class MineSweeperGame {
 	private Cell[][] board;
 	private GameStatus status;
 	private int adjMines;
-	private int size;
+	private int size, mines;
 
-	public MineSweeperGame(int size) {
+	public MineSweeperGame(int size, int mines) {
 		this.size = size;
+		this.mines = mines;
 		status = GameStatus.NotOverYet;
 		board = new Cell[size][size];
 		adjMines = 0;
 		setEmpty();
-		layMines (24);
+		layMines (mines);
 	}
 
 	public int getAdjMines(int rowPos, int colPos){
@@ -79,7 +80,7 @@ public class MineSweeperGame {
 	public void reset() {
 		status = GameStatus.NotOverYet;
 		setEmpty();
-		layMines (10);
+		layMines (mines);
 	}
 
 	private void layMines(int mineCount) {

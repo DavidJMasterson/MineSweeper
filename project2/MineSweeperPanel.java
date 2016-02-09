@@ -14,7 +14,7 @@ public class MineSweeperPanel extends JPanel {
 	private JButton butQuit;
 	private Cell iCell;
 	private JSlider boardSize;
-	private int size;
+	private int size, mines;
 
 	private MineSweeperGame game;  // model
 
@@ -50,10 +50,28 @@ public class MineSweeperPanel extends JPanel {
 			}
 		});*/
 		
-		size = Integer.parseInt(JOptionPane.showInputDialog("Please input a value"));
+		JOptionPane.showMessageDialog(null, "Welcome to MineSweeper! Board size must be between 3 and 30, mine count must not "
+				+ "exceed cell count, and mine count must be a positive number.");
+		
+		try{
+			size = Integer.parseInt(JOptionPane.showInputDialog("Board size?"));
+			mines = Integer.parseInt(JOptionPane.showInputDialog("Mine count?"));
+			if(mines > (size*size))
+				throw new IllegalArgumentException();
+			if(mines <= 0)
+				throw new IllegalArgumentException();
+			if(size < 3 || size > 30)
+				throw new IllegalArgumentException();
+		} catch(IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(null,  "Invalid input, closing.");
+			System.exit(0);
+		} catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Input error, closing.");
+			System.exit(0);
+		}
 		
 		// instantiate new MineSweeperGame
-		game = new MineSweeperGame((size));
+		game = new MineSweeperGame(size, mines);
 
 		// create the board
 		center.setLayout(new GridLayout(size, size));
