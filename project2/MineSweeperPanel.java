@@ -12,9 +12,11 @@ public class MineSweeperPanel extends JPanel {
 
 	private JButton[][] board;
 	private JButton butQuit;
+	private JLabel win, loss;
 	private Cell iCell;
 	private JSlider boardSize;
 	private int size, mines;
+	private int winCounter, lossCounter;
 
 	private MineSweeperGame game;  // model
 
@@ -23,6 +25,14 @@ public class MineSweeperPanel extends JPanel {
 		JPanel bottom = new JPanel();
 		JPanel center = new JPanel();
 		
+		//initialize wins and losses
+		winCounter = 0;
+		lossCounter = 0;
+		
+		// create JLabels
+		win = new JLabel("Wins: " + Integer.toString(winCounter));
+		loss = new JLabel("Losses: " + Integer.toString(lossCounter));
+
 		// create buttons/sliders/panes
 		butQuit = new JButton("Quit");
 	/*	boardSize = new JSlider(JSlider.HORIZONTAL);
@@ -86,6 +96,10 @@ public class MineSweeperPanel extends JPanel {
 		
 		// add quit button to layout
 		bottom.add(butQuit);
+		
+		// add win/loss counters
+		bottom.add(win);
+		bottom.add(loss);
 	
 		displayBoard();
 
@@ -137,10 +151,12 @@ public class MineSweeperPanel extends JPanel {
 								
 			if (game.getGameStatus() == GameStatus.Lost) {
 				displayBoard();
+				lossCounter++;
 				JOptionPane.showMessageDialog(null, "You Lose \n The game will reset");
 				//exposeMines = false;
 				game.reset();
 				displayBoard();
+
 
 			}
 
@@ -149,7 +165,10 @@ public class MineSweeperPanel extends JPanel {
 						+ "The game will reset");
 				game.reset();
 				displayBoard();
+				winCounter++;
 			}
+			win.setText("Wins: " + Integer.toString(winCounter));
+			loss.setText("Losses: " + Integer.toString(lossCounter));
 		}
 	}
 }
