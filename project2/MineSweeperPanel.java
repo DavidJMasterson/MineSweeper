@@ -7,6 +7,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MineSweeperPanel extends JPanel {
 
@@ -59,6 +61,17 @@ public class MineSweeperPanel extends JPanel {
 				size = boardSize.getValue();
 			}
 		});*/
+		
+		// add listener for mouse clicks
+		addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	if(e.getButton() == MouseEvent.BUTTON3) {
+            		// add flag stuff
+            	}
+            }
+
+        });
 		
 		JOptionPane.showMessageDialog(null, "Welcome to MineSweeper! Board size must be between 3 and 30, mine count must not "
 				+ "exceed cell count, and mine count must be a positive number.");
@@ -171,4 +184,8 @@ public class MineSweeperPanel extends JPanel {
 			loss.setText("Losses: " + Integer.toString(lossCounter));
 		}
 	}
+	
+	
+	
+	
 }
