@@ -30,16 +30,17 @@ public class MineSweeperGame {
 		
 		for(int row = rowPos-1; row <= rowPos+1; row++){
 			for(int col = colPos-1; col <= colPos + 1; col++) {
-				//FIX: negative array indices/does not always work
 				if(row < 0) 
 					row = 0;
 				else if(row > size - 1)
-					row = size - 1;
+					break; // if out of index, search is done so break
+						   // out of loop
 				
 				if(col < 0)
 					col = 0;
 				else if(col > size - 1)
-					col = size - 1;
+					break; // if out of index, search is done so break
+				   		   // out of loop
 				if(board[row][col].isMine()) 
 					count++;
 			}
